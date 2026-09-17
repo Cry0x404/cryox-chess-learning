@@ -86,13 +86,13 @@ Stop training with `Ctrl+C`. The checkpoint is saved before the process exits.
 cryox-chess migrate path\to\brain.json
 ```
 
-To migrate the checkpoint bundled in this repository:
+On Windows, the helper script accepts the checkpoint path as its first argument:
 
-```bash
-cryox-chess migrate legacy/brain.json
+```powershell
+.\scripts\migrate-legacy.ps1 path\to\brain.json
 ```
 
-Migration preserves compatible training counters and evaluator state while resetting fields whose old semantics cannot be transferred safely.
+Legacy checkpoints are intentionally not committed to the repository. Migration operates on a user-supplied checkpoint and preserves compatible training counters and evaluator state while resetting fields whose old semantics cannot be transferred safely.
 
 ## Inspecting a checkpoint
 

@@ -27,6 +27,7 @@ build/
 htmlcov/
 runtime/*
 !runtime/.gitkeep
+legacy/*.json
 .DS_Store
 Thumbs.db
 .idea/

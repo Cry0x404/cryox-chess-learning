@@ -23,13 +23,13 @@ def test_legacy_counters_are_preserved():
             "rook_activity": 0.1,
             "queen_early": -0.1,
         },
-        "games": 1808,
-        "generation": 47,
-        "accepted": 46,
-        "rejected": 89,
+        "games": 120,
+        "generation": 8,
+        "accepted": 5,
+        "rejected": 3,
     }
     checkpoint = migrate_legacy(legacy)
-    assert checkpoint.games == 1808
-    assert checkpoint.generation == 47
-    assert checkpoint.accepted == 46
-    assert checkpoint.rejected == 89
+    assert checkpoint.games == 120
+    assert checkpoint.generation == 8
+    assert checkpoint.accepted == 5
+    assert checkpoint.rejected == 3
