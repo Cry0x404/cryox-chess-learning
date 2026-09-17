@@ -1,5 +1,16 @@
 # Changelog
 
+All notable changes to this project are documented in this file.
+
+## Unreleased
+
+- Added branch-coverage reporting to CI.
+- Added package build and metadata validation to CI.
+- Added CodeQL static security analysis.
+- Added pull-request dependency review.
+- Added a validated GitHub Release workflow.
+- Added pre-commit hooks and release/support documentation.
+
 ## 0.1.0 - 2026-09-17
 
 - Split the learning engine into a Python package.

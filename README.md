@@ -1,12 +1,18 @@
 [![CI](https://github.com/Cry0x404/cryox-chess-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/Cry0x404/cryox-chess-learning/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Cry0x404/cryox-chess-learning/actions/workflows/codeql.yml/badge.svg)](https://github.com/Cry0x404/cryox-chess-learning/actions/workflows/codeql.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-111111)
+![Status](https://img.shields.io/badge/status-alpha-6f42c1)
 
 # Cryox Chess Learning
 
-Cryox Chess Learning is a persistent self-play training engine for chess. It combines a constrained positional evaluator, iterative alpha-beta search, quiescence search, transposition tables, multiprocessing self-play, paired arena matches, and checkpoint-based champion selection.
+Cryox Chess Learning is a persistent self-play training engine for chess. It combines a constrained positional evaluator, alpha-beta search, quiescence search, transposition tables, multiprocessing self-play, paired arena matches, and checkpoint-based champion selection.
 
 The repository contains only the learning and evaluation system. It does not include a graphical interface or a human-play client.
+
+## Project status
+
+The project is currently in alpha. Checkpoint compatibility is preserved where practical, but search and training internals may continue to evolve before a stable API is declared.
 
 ## Design goals
 
@@ -76,19 +82,17 @@ Stop training with `Ctrl+C`. The checkpoint is saved before the process exits.
 
 ## Legacy checkpoint migration
 
-The repository includes a migration command for the earlier `brain.json` format:
-
 ```bash
 cryox-chess migrate path\to\brain.json
 ```
 
-The migrated state is written to the configured checkpoint path. Existing counters such as games, generation, accepted candidates, and rejected candidates are preserved.
-
-To migrate the checkpoint bundled in this package:
+To migrate the checkpoint bundled in this repository:
 
 ```bash
 cryox-chess migrate legacy/brain.json
 ```
+
+Migration preserves compatible training counters and evaluator state while resetting fields whose old semantics cannot be transferred safely.
 
 ## Inspecting a checkpoint
 
@@ -96,20 +100,7 @@ cryox-chess migrate legacy/brain.json
 cryox-chess status
 ```
 
-Example output:
-
-```text
-generation: 44
-games: 1446
-accepted: 43
-rejected: 77
-candidate_games: 0
-total_positions: 0
-```
-
 ## Arena evaluation
-
-A saved candidate can be evaluated against the current champion:
 
 ```bash
 cryox-chess arena
@@ -142,25 +133,15 @@ Paired arena
       +---- accept ----> new champion + hall of fame
 ```
 
-The search stack uses:
-
-- iterative deepening
-- alpha-beta pruning
-- quiescence search
-- transposition tables
-- tactical move ordering
-- killer moves
-- history heuristic
+The search stack includes alpha-beta pruning, quiescence search, transposition tables, tactical move ordering, killer moves, and a history heuristic.
 
 The evaluator models material, mobility, center control, space, development, king safety, king pressure, pawn structure, passed pawns, rook activity, piece stability, castling rights, endgame king activity, promotion pressure, and tempo.
 
-See `docs/architecture.md`, `docs/training.md`, and `docs/checkpoints.md` for implementation details.
+See `docs/architecture.md`, `docs/training.md`, `docs/checkpoints.md`, and `docs/roadmap.md` for implementation details.
 
 ## Configuration
 
-There is one training configuration rather than multiple performance modes. Resource usage is controlled directly through parameters such as worker count, search depth, batch size, and arena size.
-
-Key settings:
+There is one training configuration rather than named performance modes. Resource usage is controlled directly through worker count, search depth, batch size, arena size, and related parameters.
 
 ```toml
 workers = 0
@@ -173,13 +154,34 @@ arena_depth = 2
 
 `workers = 0` selects an automatic worker count based on the host CPU.
 
-## Development
+## Quality gates
+
+Every change to `main` is validated on Python 3.11, 3.12, and 3.13. CI runs Ruff, the test suite with branch coverage, and a package build check. CodeQL performs static security analysis separately.
+
+Local validation:
 
 ```bash
 pip install -e ".[dev]"
 ruff check .
-pytest
+pytest --cov=cryox_chess --cov-branch
 ```
+
+Optional pre-commit hooks:
+
+```bash
+pre-commit install
+pre-commit run --all-files
+```
+
+## Releases
+
+Release artifacts are built from the repository's declared version and validated before publication. The release workflow produces both a source distribution and a wheel.
+
+See `RELEASING.md` for the release procedure.
+
+## Contributing and security
+
+Contribution guidelines are in `CONTRIBUTING.md`. Security-sensitive reports should follow `SECURITY.md`. General usage and support guidance is in `SUPPORT.md`.
 
 ## License
 
