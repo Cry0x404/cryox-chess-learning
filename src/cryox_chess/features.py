@@ -102,7 +102,7 @@ def _color_stats(
     stats["center_control"] = center
 
     space = 0
-    for square in board.occupied_co[color].scan_forward():
+    for square in chess.scan_forward(board.occupied_co[color]):
         rank = chess.square_rank(square)
         if (color == chess.WHITE and rank >= 4) or (
             color == chess.BLACK and rank <= 3
