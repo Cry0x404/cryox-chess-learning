@@ -5,7 +5,7 @@ import time
 from concurrent.futures import ProcessPoolExecutor
 
 from .arena import ArenaJob, ArenaResult, run_arena
-from .checkpoint import Checkpoint, load_checkpoint, save_checkpoint
+from .checkpoint import load_checkpoint, save_checkpoint
 from .config import AppConfig
 from .evaluator import sanitize_weights, sanity_check
 from .metrics import MetricsWriter
