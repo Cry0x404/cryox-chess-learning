@@ -3,14 +3,30 @@ name: CodeQL
 on:
   push:
     branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+      - ".gitignore"
+      - ".editorconfig"
+      - ".gitattributes"
+      - "LICENSE"
   pull_request:
     branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+      - ".gitignore"
+      - ".editorconfig"
+      - ".gitattributes"
+      - "LICENSE"
   schedule:
     - cron: "17 3 * * 1"
 
 permissions:
   contents: read
   security-events: write
+
+concurrency:
+  group: codeql-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   analyze:
