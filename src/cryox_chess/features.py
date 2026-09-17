@@ -104,9 +104,9 @@ def _color_stats(
     space = 0
     for square in board.occupied_co[color].scan_forward():
         rank = chess.square_rank(square)
-        if color == chess.WHITE and rank >= 4:
-            space += 1
-        elif color == chess.BLACK and rank <= 3:
+        if (color == chess.WHITE and rank >= 4) or (
+            color == chess.BLACK and rank <= 3
+        ):
             space += 1
     stats["space"] = space / 8.0
 
@@ -191,9 +191,9 @@ def _color_stats(
         pawn_advance += max(0, advance) / 6.0
         if _is_passed(board, square, color):
             passed.append(square)
-        if color == chess.WHITE and rank >= 5:
-            promotion_threat += 1.0 + 0.5 * max(0, advance - 4)
-        elif color == chess.BLACK and rank <= 2:
+        if (color == chess.WHITE and rank >= 5) or (
+            color == chess.BLACK and rank <= 2
+        ):
             promotion_threat += 1.0 + 0.5 * max(0, advance - 4)
 
     passed_set = set(passed)
@@ -237,9 +237,9 @@ def _color_stats(
         rank = chess.square_rank(square)
         if own_files[file_index] == 0:
             rook_open += 1.0 if enemy_files[file_index] == 0 else 0.55
-        if color == chess.WHITE and rank == 6:
-            rook_seventh += 1.0
-        elif color == chess.BLACK and rank == 1:
+        if (color == chess.WHITE and rank == 6) or (
+            color == chess.BLACK and rank == 1
+        ):
             rook_seventh += 1.0
 
     stats["rook_open_file"] = rook_open
