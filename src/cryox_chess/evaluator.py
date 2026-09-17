@@ -49,6 +49,4 @@ def sanity_check(weights: dict[str, float]) -> bool:
 
     if evaluate(extra_white_queen, clean) < 500:
         return False
-    if evaluate(extra_black_queen, clean) > -500:
-        return False
-    return True
+    return evaluate(extra_black_queen, clean) <= -500
