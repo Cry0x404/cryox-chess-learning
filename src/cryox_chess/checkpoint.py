@@ -47,7 +47,7 @@ class Checkpoint:
         }
 
     @classmethod
-    def from_dict(cls, payload: dict) -> "Checkpoint":
+    def from_dict(cls, payload: dict) -> Checkpoint:
         champion = sanitize_weights(
             payload.get("champion_weights")
             or payload.get("best_weights")
