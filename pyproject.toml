@@ -47,7 +47,7 @@ Documentation = "https://github.com/Cry0x404/cryox-chess-learning/tree/main/docs
 [project.optional-dependencies]
 dev = [
     "pre-commit>=4,<5",
-    "pytest>=8.3,<9",
+    "pytest>=8.3,<10",
     "pytest-cov>=6,<8",
     "ruff>=0.8,<1"
 ]
